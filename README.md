@@ -26,4 +26,9 @@ Connect-ExchangeOnline
 New-ApplicationAccessPolicy -AccessRight RestrictAccess -AppId "APPLICATIONID" -PolicyScopeGroupId "NAMEOFMAILENABLEDSECURITYGROUP" -Description "Restrict Application Registration for sending and reading email"
 ```
 
-
+## Usage
+Make sure you provide the values for the authentication part within the Script. 
+These are:
+- The Tenant ID
+- Client ID
+- a valid Client Secret for the Azure AD application.
