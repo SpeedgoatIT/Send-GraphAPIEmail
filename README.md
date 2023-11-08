@@ -8,8 +8,6 @@ Before you run this script, you'll need to have the following:
 - An Azure AD application with the necessary API permissions to send emails via Microsoft Graph.
 - The Tenant ID, Client ID, and a valid Client Secret for the Azure AD application.
 
-
-
 ### Shared Mailbox
 For every use-case, we need to create a distinctive Shared Mailbox via Exchange Admin Center.
  
@@ -25,6 +23,16 @@ While that API Permission would allow to send E-Mails from EVERY Mailbox in our 
 Connect-ExchangeOnline
 New-ApplicationAccessPolicy -AccessRight RestrictAccess -AppId "APPLICATIONID" -PolicyScopeGroupId "NAMEOFMAILENABLEDSECURITYGROUP" -Description "Restrict Application Registration for sending and reading email"
 ```
+
+### Conditional Access Policies
+To further harden the involved App Registration, we need to create a Conditional Acecss Polics that exclusively targets it.
+- Create a new Conditional Access Policy with the naming: AutomationAccountProtection-USECASE-Block-FromUnknownNetworks
+- Select "All Users"
+- Target Ressource: Selected Apps -> App Registration we created above
+- Conditions: Location = Any Location, Speedgoat Networks excluded
+- Grant: Block access
+
+This policy makes it so, that every authentication request that goes towards the app registration which is not coming from our networks; Will be blocked.
 
 ## Usage
 Make sure you provide the values for the authentication part within the Script. 
